@@ -1,0 +1,12 @@
+{
+  "name": "LevelUpFitnessApp",
+  "displayName": "LevelUpFitnessApp",
+  "expo": {
+    "name": "LevelUpFitnessApp",
+    "slug": "LevelUpFitnessApp",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
