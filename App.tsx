@@ -5,6 +5,9 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
+import Toast from 'react-native-toast-message';
+import { UserProvider } from "./components/Context/UserContext"
+import Modal from './components/Modal';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -14,10 +17,15 @@ export default function App() {
     return null;
   } else {
     return (
-      <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
-        <StatusBar />
-      </SafeAreaProvider>
+      <UserProvider>
+        <SafeAreaProvider>
+          <Navigation colorScheme={colorScheme} />
+          <Modal />
+          <Toast ref={(ref) => Toast.setRef(ref)} />
+          <StatusBar />
+        </SafeAreaProvider>
+      </UserProvider>
+      
     );
   }
 }

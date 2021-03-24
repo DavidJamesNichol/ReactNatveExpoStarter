@@ -5,9 +5,11 @@ import * as React from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import HomeScreen from '../screens/HomeScreen';
+import CameraScreen from '../screens/CameraScreen';
+import NotificationsButton from "../components/NotificationsButton"
+import LogOutButton from "../components/LogOutButton"
+import { BottomTabParamList, HomeParamList, } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -16,20 +18,21 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="Home"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneNavigator}
+        name="Home"
+        component={HomeNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoNavigator}
+        name="Camera"
+        component={CameraNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarVisible: false,
         }}
       />
     </BottomTab.Navigator>
@@ -42,32 +45,47 @@ function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']
   return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
 }
 
+
+
+const standardOptions = { 
+  headerTitle: 'App', 
+  headerTitleAlign: 'center', 
+  headerLeft: () => (
+    <NotificationsButton />
+  ),
+  headerRight: () => (
+    <LogOutButton />
+  )
+}
+
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
+const HomeStack = createStackNavigator<HomeParamList>();
 
-function TabOneNavigator() {
+function HomeNavigator() {
   return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+    <HomeStack.Navigator>
+      <HomeStack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={standardOptions}
       />
-    </TabOneStack.Navigator>
+    </HomeStack.Navigator>
   );
 }
 
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
+const CameraStack = createStackNavigator<HomeParamList>();
 
-function TabTwoNavigator() {
+function CameraNavigator() {
   return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+    <CameraStack.Navigator>
+      <CameraStack.Screen
+        name="CameraScreen"
+        component={CameraScreen}
+        options={{
+          headerShown: false
+        }}
       />
-    </TabTwoStack.Navigator>
+    </CameraStack.Navigator>
   );
 }
